@@ -25,8 +25,8 @@ export default function RootLayout({
       <body className='overflow-x-hidden bg-yellow-300'>
         <Header />
         <main>
-          {children}
-        <ViewCanvas />
+          {children} {/* children no RootLayout é o conteúdo da rota atual. // Quando você acessa /, o children é app/page.tsx.  Quando você acessa /about, o children é app/about/page.tsx. */}
+          <ViewCanvas />
         </main>
       </body>
       <PrismicPreview repositoryName={repositoryName} />

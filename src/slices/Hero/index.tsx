@@ -15,6 +15,12 @@ import { Bounded } from "@/components/Bounded";
 import Button from "@/components/Button";
 import { TextSplitter } from "@/components/TextSplitter";
 
+import { View } from "@react-three/drei";
+
+import { useStore } from "@/hooks/useStore";
+
+import Scene from "./Scene";
+import { Bubbles } from "./Bubbles";
 
 export type HeroProps = SliceComponentProps<Content.HeroSlice>;
 
@@ -30,11 +36,11 @@ const Hero: FC<HeroProps> = ({ slice }) => {
         ease: 'power4.in',
         delay: 0.1,
         stagger: 0.5
-      })
+      }, '-=0.5')
       .from(".hero-subheading", {
         opacity: 0,
         y: 30,
-      }, '+=0.8')
+      }, '+=0.4')
       .from(".hero-body", {
         opacity: 0,
         y: 10,
@@ -58,25 +64,25 @@ const Hero: FC<HeroProps> = ({ slice }) => {
     scrollTl
       .fromTo("body", {
         backgroundColor: "#FDE047"
-      }, 
-      {
-        backgroundColor: '#D9F99D',
-        overwrite: "auto"
-      }, 1 //duracao da timeLine
+      },
+        {
+          backgroundColor: '#D9F99D',
+          overwrite: "auto"
+        }, 1 //duracao da timeLine
       )
       //👇️ele apenas comeca a animacao quando entra na tela, pois antes de entrar nela nao tinha scroll para ele, mas assim que ele aparece na tela, o scrolltrigger entra em acao pois encontra um scroll para se basear
       .from('.text-side-heading .split-char', {  //usamos .from pois assim vamos ver os elementos chegando em sua posicao no finalzinho da secao, vai ser complementado, é como se ela so acontecesse depois que a de cima acabasse(na teoria nao é assim, mas na pratica ficou) 
-        scale: 1.3,              
-        y:40,
-        rotate:-25,
-        opacity:0,
+        scale: 1.3,
+        y: 40,
+        rotate: -25,
+        opacity: 0,
         stagger: .1,
         ease: 'back.out(3)',
-        duration:.5
+        duration: .5
       })
       .from(".text-side-body", {
-        y:20,
-        opacity:0,
+        y: 20,
+        opacity: 0,
       })
 
   })
@@ -87,8 +93,12 @@ const Hero: FC<HeroProps> = ({ slice }) => {
       data-slice-variation={slice.variation}
       className="hero opacity-0"
     >
-      <div className="grid">
+      <View className="hero-scene pointer-events-none sticky top-0 z-50 -mt-[100vh] hidden h-screen w-screen md:block"> {/*-mt-[100vh] épara nao empurrar todo conteudo para baixo, entao basicamente tiramos toda margin dele  */}
+        <Scene />
+        <Bubbles count={300} speed={2} repeat={true} />
+      </View>
 
+      <div className="grid">
         <div className="grid h-screen place-items-center">
           <div className="grid auto-rows-min place-items-center text-center">
             <h1 className="hero-header-word lg:text-[13rem] text-7xl font-black uppercase leading-[.8] text-orange-500 md:text-[9rem]">
