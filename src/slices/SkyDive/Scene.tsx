@@ -107,14 +107,13 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
                         { x: 0, y: 0, z: -.5 },
                         { ...getXYPositions(-7), z: -7 }
                     ],
-                    stagger: .2
-                }, 0)
+                    stagger: .3
+                }, 0.4)
         }
         scrollTl
             .to(canRef.current.position, { ...getXYPositions(4), duration: .5, ease: 'back.in(1.7)' })
             .to(cloudsRef.current.position, {z:10})
-            .to("body", {backgroundColor:"#FDE047"})
-
+            
     })
 
 
