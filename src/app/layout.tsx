@@ -6,6 +6,7 @@ import { repositoryName } from "@/prismicio";
 import "./app.css";
 import Header from '@/components/Header';
 import ViewCanvas from '@/components/ViewCanvas';
+import Footer from '@/components/Footer';
 
 const alpino = localFont({
   src: "../../public/fonts/Alpino-Variable.woff2",
@@ -28,6 +29,7 @@ export default function RootLayout({
           {children} {/* children no RootLayout é o conteúdo da rota atual. // Quando você acessa /, o children é app/page.tsx.  Quando você acessa /about, o children é app/about/page.tsx. */}
           <ViewCanvas />
         </main>
+        <Footer />
       </body>
       <PrismicPreview repositoryName={repositoryName} />
     </html>
