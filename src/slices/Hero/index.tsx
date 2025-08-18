@@ -21,12 +21,19 @@ import { useStore } from "@/hooks/useStore";
 
 import Scene from "./Scene";
 import { Bubbles } from "./Bubbles";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export type HeroProps = SliceComponentProps<Content.HeroSlice>;
 
 const Hero: FC<HeroProps> = ({ slice }) => {
 
+  const ready = useStore((state) => state.ready)
+  const isDesktop = useMediaQuery('(min-width: 768px)', true) //🥫so vai renderizar se a tela for maior que 768px(no caso colocamos isso nas latas)
+
   useGSAP(() => {
+
+    if (!ready  && isDesktop) return 
+
     const introTl = gsap.timeline()
 
     introTl.set('.hero', { opacity: 1 }) //questao de estetica, todos elementos entram ao mesmo tempo, fica melhor a animacao, para isso colocamos opacity-0 no hero
@@ -85,7 +92,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
         opacity: 0,
       })
 
-  })
+  }, { dependencies: [ready, isDesktop] }) //vai rodr baseado no ready
 
   return (
     <Bounded
@@ -93,15 +100,19 @@ const Hero: FC<HeroProps> = ({ slice }) => {
       data-slice-variation={slice.variation}
       className="hero opacity-0"
     >
-      <View className="hero-scene pointer-events-none sticky top-0 z-50 -mt-[100vh] hidden h-screen w-screen md:block"> {/*-mt-[100vh] épara nao empurrar todo conteudo para baixo, entao basicamente tiramos toda margin dele  */}
-        <Scene />
-        <Bubbles count={300} speed={2} repeat={true} />
-      </View>
+
+      {isDesktop && (   /* bem aqui🥫 */
+
+        <View className="hero-scene pointer-events-none sticky top-0 z-50 -mt-[100vh] hidden h-screen w-screen md:block"> {/*-mt-[100vh] épara nao empurrar todo conteudo para baixo, entao basicamente tiramos toda margin dele  */}
+          <Scene />
+          <Bubbles count={300} speed={2} repeat={true} />
+        </View>
+      )}
 
       <div className="grid">
         <div className="grid h-screen place-items-center">
           <div className="grid auto-rows-min place-items-center text-center">
-            <h1 className="hero-header-word lg:text-[13rem] text-7xl font-black uppercase leading-[.8] text-orange-500 md:text-[9rem]">
+            <h1 className="hero-header-word lg:text-[11rem] text-7xl font-black uppercase leading-[.8] text-orange-500 md:text-[9rem]">
               <TextSplitter text={asText((slice.primary.heading))} wordDisplayStyle="block" className="hero-header-word" />
             </h1>
 

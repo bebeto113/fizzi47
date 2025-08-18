@@ -4,7 +4,7 @@ type BoundedProps = {
   as?: React.ElementType; // só pode ser "div", "a", "section" ou outro componente válido
   className?: string;     // só string, não número
   children: React.ReactNode;  // obrigatório, e pode ser JSX, texto, etc.
-};
+}; 
 
 export const Bounded = ({
   as: Comp = "section",

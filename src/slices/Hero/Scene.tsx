@@ -12,9 +12,13 @@ gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 import { useRef } from "react"
 
+import { useStore } from "@/hooks/useStore";
+
 type Props = {}
 
 export default function Scene({ }: Props) {
+
+    const isReady = useStore((state) => state.isReady)
 
     const can1Ref = useRef<Group>(null) //useRef(tipo do Ref) Group é um elemento do three.js para dizer que dentro dele vai objetos 3d
     const can2Ref = useRef<Group>(null)
@@ -39,6 +43,8 @@ export default function Scene({ }: Props) {
             !can2GroupRef.current ||
             !groupRef.current
         ) return;
+
+        isReady()
 
         //.set das latinhas
         gsap.set(can1Ref.current.position, { x: -1.5 })  //precisamos delcarar oque vamos mudar, pois estamos mexendo com 3d, loucura ne
@@ -125,6 +131,7 @@ export default function Scene({ }: Props) {
                     floatSpeed={FLOAT_SPEED}
                 />
             </group>
+            
             <FloatingCan
                 ref={can3Ref}
                 flavor="grape"

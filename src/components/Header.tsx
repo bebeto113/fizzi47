@@ -5,7 +5,7 @@ type Props = {}
 
 export default function Header({ }: Props) {
     return (
-        <header className='flex justify-center py-4 -mb-20'>
+        <header className='flex justify-center py-4 -mb-[104px]'>
             <FizziLogo className='h-20 z-10 cursor-pointer text-sky-800' />
         </header>
     )
